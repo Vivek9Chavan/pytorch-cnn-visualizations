@@ -116,10 +116,10 @@ class CNNLayerVisualization():
 
 
 if __name__ == '__main__':
-    cnn_layer = 17
+    cnn_layer = 18
     filter_pos = 5
     # Fully connected layer is not needed
-    pretrained_model = models.vgg16(pretrained=True).features
+    pretrained_model = models.resnet18(pretrained=True).features
     layer_vis = CNNLayerVisualization(pretrained_model, cnn_layer, filter_pos)
 
     # Layer visualization with pytorch hooks

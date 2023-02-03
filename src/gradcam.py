@@ -27,22 +27,24 @@ class CamExtractor():
             Does a forward pass on convolutions, hooks the function at given layer
         """
         conv_output = None
-        for module_pos, module in self.model.features._modules.items():
-            x = module(x)  # Forward
-            if int(module_pos) == self.target_layer:
+        i = 0
+        for module_pos, module in self.model._modules.items():
+
+            if module_pos == "avgpool":
                 x.register_hook(self.save_gradient)
                 conv_output = x  # Save the convolution output on that layer
+                x = module(x)
+
+            else:
+                x = module(x)  # Forward
         return conv_output, x
 
     def forward_pass(self, x):
-        """
-            Does a full forward pass on the model
-        """
         # Forward pass on the convolutions
         conv_output, x = self.forward_pass_on_convolutions(x)
         x = x.view(x.size(0), -1)  # Flatten
         # Forward pass on the classifier
-        x = self.model.classifier(x)
+        x = self.model.fc(x)
         return conv_output, x
 
 

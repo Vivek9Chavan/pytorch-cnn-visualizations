@@ -167,6 +167,6 @@ def preprocess_and_blur_image(pil_im, resize_im=True, blur_rad=None):
 
 if __name__ == '__main__':
     target_class = 130  # Flamingo
-    pretrained_model = models.alexnet(pretrained=True)
+    pretrained_model = models.resnet18(pretrained=True)
     csig = RegularizedClassSpecificImageGeneration(pretrained_model, target_class)
     csig.generate()

@@ -29,7 +29,7 @@ class ClassSpecificImageGeneration():
         if not os.path.exists('../generated/class_'+str(self.target_class)):
             os.makedirs('../generated/class_'+str(self.target_class))
 
-    def generate(self, iterations=150):
+    def generate(self, iterations=1000):
         """Generates class specific image
 
         Keyword Arguments:
@@ -61,7 +61,7 @@ class ClassSpecificImageGeneration():
             optimizer.step()
             # Recreate image
             self.created_image = recreate_image(self.processed_image)
-            if i % 10 == 0 or i == iterations-1:
+            if i % 100 == 0 or i == iterations-1:
                 # Save image
                 im_path = '../generated/class_'+str(self.target_class)+'/c_'+str(self.target_class)+'_'+'iter_'+str(i)+'.png'
                 save_image(self.created_image, im_path)
@@ -70,7 +70,7 @@ class ClassSpecificImageGeneration():
 
 
 if __name__ == '__main__':
-    target_class = 130  # Flamingo
-    pretrained_model = models.alexnet(pretrained=True)
+    target_class = 100  # Flamingo
+    pretrained_model = models.resnet18(pretrained=True)
     csig = ClassSpecificImageGeneration(pretrained_model, target_class)
     csig.generate()
